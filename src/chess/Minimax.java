@@ -11,7 +11,7 @@ import java.util.HashMap;
  *
  * @author Tyler
  */
-public abstract class Minimax implements Cloneable
+public class Minimax implements Cloneable
 {
     public static final int UNLIMITED_SEARCH_DEPTH = -1;
     public static final int MINI_HAS_WON           = Integer.MAX_VALUE;
@@ -21,6 +21,9 @@ public abstract class Minimax implements Cloneable
     public static final int MIN_TURN               = -1;
 
     private int player = Minimax.MAX_TURN; // Must always be 1 or -1
+    
+    public Gamestate myState = new Gamestate();
+    
 
     public final int getPlayer()
     {
@@ -53,7 +56,7 @@ public abstract class Minimax implements Cloneable
         {
             Minimax tempBoard = (Minimax)this.clone();
             tempBoard.doMove(move);
-            int score = tempBoard.evaluate(maxSearchDepth == Minimax.UNLIMITED_SEARCH_DEPTH ? Minimax.UNLIMITED_SEARCH_DEPTH : maxSearchDepth - 1, new AlphaBeta());
+            int score = evaluate(maxSearchDepth == Minimax.UNLIMITED_SEARCH_DEPTH ? Minimax.UNLIMITED_SEARCH_DEPTH : maxSearchDepth - 1, new AlphaBeta());
             if(score * player < bestScore || bestMove == null)
             {
                 bestScore = score * player;
@@ -142,13 +145,29 @@ public abstract class Minimax implements Cloneable
         }
     }
 
-    public abstract int getCurrentScore();
-    public abstract LinkedList listAllLegalMoves();
-    public abstract void moveAction(Object move);
+    public int getCurrentScore()
+    {
+        return 0;
+    }
+    
+    public LinkedList listAllLegalMoves()
+    {
+        LinkedList<String> moves = new LinkedList<String>();
+        
+        return moves;
+    }
+    public void moveAction(Object move)
+    {
+        
+    }
     public final void doMove(Object move)
     {
         this.moveAction(move);
         player *= -1;
+        
     }
-    public abstract void staleMate();
+    public void staleMate()
+    {
+        
+    }
 }
