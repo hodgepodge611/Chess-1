@@ -4,6 +4,8 @@
  */
 package chess;
 
+import chess.Gamestate.GameMoves;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.HashMap;
 
@@ -152,7 +154,71 @@ public class Minimax implements Cloneable
     
     public LinkedList listAllLegalMoves()
     {
-        LinkedList<String> moves = new LinkedList<String>();
+        Gamestate.GameMoves gm = myState.new GameMoves();
+        LinkedList<int[]> moves = new LinkedList<int[]>();
+        for(int i = 0; i < myState.state.length; i++)
+        {
+            ArrayList<Integer> tempList = new ArrayList<Integer>();
+            byte temp = myState.state[i];
+            if(temp == 1 && this.getPlayer() == -1)
+            {
+                tempList = gm.movePawn(temp, -1);
+                for(int j = 0; j < tempList.size(); j++)
+                {
+                    moves.add(new int[]{i, tempList.get(j)});                    
+                }
+                //gm.validatePawnMove(temp, tempList);
+                
+            }
+            if(temp == 7 && this.getPlayer() == 1)
+            {
+                tempList = gm.movePawn(temp, 1);
+                for(int j = 0; j < tempList.size(); j++)
+                {
+                    moves.add(new int[]{i, tempList.get(j)});                    
+                }
+               // myState.validatePawn(tempList);                
+            }
+            if(temp == 2 && this.getPlayer() == -1)
+            {
+                tempList = gm.moveKnight(temp, -1);
+                for(int j = 0; j < tempList.size(); j++)
+                {
+                    moves.add(new int[]{i,tempList.get(j)});
+                }
+            }
+            if(temp == 8 && this.getPlayer() == 1)
+            {
+                tempList = gm.moveKnight(temp, 1);
+                for(int j = 0; j < tempList.size(); j++)
+                {
+                    moves.add(new int[]{i,tempList.get(j)});
+                }
+            }
+            if(temp == 3 && this.getPlayer() == -1)
+            {
+                
+            }
+            if(temp == 9 && this.getPlayer() == 1)
+            {
+            }
+            if(temp == 4 && this.getPlayer() == -1)
+            {
+                
+            }
+            if(temp == 10 && this.getPlayer() == 1)
+            {
+            }
+            if(temp == 5 && this.getPlayer() == -1)
+            {}
+            if(temp == 11 && this.getPlayer() == 1)
+            {}
+            if(temp == 6 && this.getPlayer() == -1)
+            {}
+            if(temp == 7 && this.getPlayer() == 1)
+            {}
+            
+        }
         
         return moves;
     }
