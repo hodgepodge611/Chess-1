@@ -197,31 +197,74 @@ public class Minimax implements Cloneable
             }
             if(temp == 3 && this.getPlayer() == -1)
             {
-                
+                tempList = gm.moveBishop(temp, -1);
+                for(int j = 0; j < tempList.size(); j++)
+                {
+                    moves.add(new int[]{i,tempList.get(j)});
+                }
             }
             if(temp == 9 && this.getPlayer() == 1)
             {
+                tempList = gm.moveBishop(temp, 1);
+                for(int j = 0; j < tempList.size(); j++)
+                {
+                    moves.add(new int[]{i,tempList.get(j)});
+                }
             }
             if(temp == 4 && this.getPlayer() == -1)
             {
-                
+                tempList = gm.moveRook(temp, -1);
+                for(int j = 0; j < tempList.size(); j++)
+                {
+                    moves.add(new int[]{i,tempList.get(j)});
+                }
             }
             if(temp == 10 && this.getPlayer() == 1)
             {
+                tempList = gm.moveRook(temp, 1);
+                for(int j = 0; j < tempList.size(); j++)
+                {
+                    moves.add(new int[]{i,tempList.get(j)});
+                }
             }
             if(temp == 5 && this.getPlayer() == -1)
-            {}
+            {
+                tempList = gm.moveQueen(temp, -1);
+                for(int j = 0; j < tempList.size(); j++)
+                {
+                    moves.add(new int[]{i,tempList.get(j)});
+                }
+            }
             if(temp == 11 && this.getPlayer() == 1)
-            {}
+            {
+                tempList = gm.moveQueen(temp, 1);
+                for(int j = 0; j < tempList.size(); j++)
+                {
+                    moves.add(new int[]{i,tempList.get(j)});
+                }
+            }
             if(temp == 6 && this.getPlayer() == -1)
-            {}
+            {
+                tempList = gm.moveKing(temp, -1);
+                for(int j = 0; j < tempList.size(); j++)
+                {
+                    moves.add(new int[]{i,tempList.get(j)});
+                }
+            }
             if(temp == 7 && this.getPlayer() == 1)
-            {}
+            {
+                tempList = gm.moveKing(temp, 1);
+                for(int j = 0; j < tempList.size(); j++)
+                {
+                    moves.add(new int[]{i,tempList.get(j)});
+                }
+            }
             
         }
         
         return moves;
     }
+    
     public void moveAction(Object move)
     {
         

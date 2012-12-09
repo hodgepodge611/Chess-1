@@ -239,16 +239,729 @@ public class Gamestate {
                 return positions;
             }
             
-            public ArrayList<Integer> moveBishiop(int pos, int player)
+            public ArrayList<Integer> moveBishop(int pos, int player)
             {
                 positions = new ArrayList<Integer>();
+                int i = pos;
                 
                 if(player == -1) //white player. for now used -1
-                {   
+                {
+                    if(i%8 != 0)
+                    {
+                        while(i%8>0 && i-9 > 0) //can go left and up
+                        {
+                            if(state[i-9] == 0)
+                            {
+                                positions.add(i-9);
+                                i -= 9;
+                            }
+                            else if(state[i-9] >= 7 ) //check one up and one left
+                            {
+                                positions.add(i-9);
+                                break;
+                            }
+                            else
+                            {   break;  }
+                        }
+                        i = pos;
+                        
+                        while(i % 8 > 0 && i+7 < 63) //can go left and down
+                        {
+                            if(state[i+7] == 0) // if empty
+                            {
+                                positions.add(i+7);
+                                i += 7;
+                            }
+                            else if(state[i+7] >= 7) //if enemy
+                            {
+                                positions.add(i+7);
+                                break;
+                            }
+                            else //if ally
+                            {   break;  }
+                        }                        
+                        i = pos;
+                      }
+                      if(i % 8 != 7)
+                      {
+                          while(i % 8 < 7 && i-7 > 0) //can go right and up
+                          {
+                              if(state[i-7] == 0)   //if empty
+                              {
+                                  positions.add(i-7);
+                                  i -=7;
+                              }
+                              else if(state[i-7] >= 7)  //if enemy
+                              {
+                                  positions.add(i-7);
+                                  break;
+                              }
+                              else  // if ally
+                              { break;  }
+                          }
+                          i = pos;
+                          while(i % 8 < 7 && i+9 < 63) //can go right and down
+                          {
+                              if(state[i+9] == 0) //if empty
+                              {
+                                  positions.add(i+9);
+                                  i += 9;
+                              }
+                              else if(state[i+9] >= 7) //if enemy
+                              {
+                                  positions.add(i+9);
+                                  break;
+                              }
+                              else
+                              { break;  }
+                          }
+                      }            
+                   }
+                else    //black player
+                {
+                    if(i%8 != 0)
+                    {
+                        while(i%8>0 && i-9 > 0) //can go left and up
+                        {
+                            if(state[i-9] == 0)
+                            {
+                                positions.add(i-9);
+                                i -= 9;
+                            }
+                            else if(state[i-9] < 7 ) //check one up and one left
+                            {
+                                positions.add(i-9);
+                                break;
+                            }
+                            else
+                            {   break;  }
+                        }
+                        i = pos;
+                        
+                        while(i % 8 > 0 && i+7 < 63) //can go left and down
+                        {
+                            if(state[i+7] == 0) // if empty
+                            {
+                                positions.add(i+7);
+                                i += 7;
+                            }
+                            else if(state[i+7] < 7) //if enemy
+                            {
+                                positions.add(i+7);
+                                break;
+                            }
+                            else //if ally
+                            {   break;  }
+                        }                        
+                        i = pos;
+                      }
+                      if(i % 8 != 7)
+                      {
+                          while(i % 8 < 7 && i-7 > 0) //can go right and up
+                          {
+                              if(state[i-7] == 0)   //if empty
+                              {
+                                  positions.add(i-7);
+                                  i -=7;
+                              }
+                              else if(state[i-7] < 7)  //if enemy
+                              {
+                                  positions.add(i-7);
+                                  break;
+                              }
+                              else  // if ally
+                              { break;  }
+                          }
+                          i = pos;
+                          while(i % 8 < 7 && i+9 < 63) //can go right and down
+                          {
+                              if(state[i+9] == 0) //if empty
+                              {
+                                  positions.add(i+9);
+                                  i += 9;
+                              }
+                              else if(state[i+9] < 7) //if enemy
+                              {
+                                  positions.add(i+9);
+                                  break;
+                              }
+                              else
+                              { break;  }
+                          }
+                      } 
+                 }
+                return positions;
+             }
             
+            public ArrayList<Integer> moveRook(int pos, int player)
+            {
+                positions = new ArrayList<Integer>();
+                int i = pos;
+                
+                if(player == -1) //white player. for now used -1
+                {
+                    if(i%8 != 0)
+                    {
+                        while(i%8>0) //can go left 
+                        {
+                            if(state[i-1] == 0)     //if empty
+                            {
+                                positions.add(i-1);
+                                i--;
+                            }
+                            else if(state[i-1] >= 7 ) //if enemy
+                            {
+                                positions.add(i-1);
+                                break;
+                            }
+                            else    // if ally
+                            {   break;  }
+                        }
+                        i = pos;
+                    }
+                    if(i%8 != 7)
+                    {
+                        while(i % 8 < 7 ) //can go right
+                        {
+                            if(state[i+1] == 0) // if empty
+                            {
+                                positions.add(i+1);
+                                i++;
+                            }
+                            else if(state[i+1] >= 7) //if enemy
+                            {
+                                positions.add(i+1);
+                                break;
+                            }
+                            else //if ally
+                            {   break;  }
+                        }                        
+                        i = pos;
+                      }
+                      if(i > 7)
+                      {
+                          while(i-8 > 0) //can go up
+                          {
+                              if(state[i-8] == 0)   //if empty
+                              {
+                                  positions.add(i-8);
+                                  i -=8;
+                              }
+                              else if(state[i-8] >= 7)  //if enemy
+                              {
+                                  positions.add(i-8);
+                                  break;
+                              }
+                              else  // if ally
+                              { break;  }
+                          }
+                          i = pos;
+                      }
+                      if(i<56)
+                      {
+                          while(i+8 < 63) //can go down
+                          {
+                              if(state[i+8] == 0) //if empty
+                              {
+                                  positions.add(i+8);
+                                  i += 8;
+                              }
+                              else if(state[i+8] >= 7) //if enemy
+                              {
+                                  positions.add(i+8);
+                                  break;
+                              }
+                              else
+                              { break;  }
+                          }
+                      }            
+                } 
+                else    //black player
+                {
+                   if(i%8 != 0)
+                    {
+                        while(i%8>0) //can go left 
+                        {
+                            if(state[i-1] == 0)     //if empty
+                            {
+                                positions.add(i-1);
+                                i--;
+                            }
+                            else if(state[i-1] < 7) //if enemy
+                            {
+                                positions.add(i-1);
+                                break;
+                            }
+                            else    // if ally
+                            {   break;  }
+                        }
+                        i = pos;
+                    }
+                    if(i%8 != 7)
+                    {
+                        while(i % 8 < 7 ) //can go right
+                        {
+                            if(state[i+1] == 0) // if empty
+                            {
+                                positions.add(i+1);
+                                i++;
+                            }
+                            else if(state[i+1] < 7) //if enemy
+                            {
+                                positions.add(i+1);
+                                break;
+                            }
+                            else //if ally
+                            {   break;  }
+                        }                        
+                        i = pos;
+                      }
+                      if(i > 7)
+                      {
+                          while(i-8 > 0) //can go up
+                          {
+                              if(state[i-8] == 0)   //if empty
+                              {
+                                  positions.add(i-8);
+                                  i -=8;
+                              }
+                              else if(state[i-8] < 7)  //if enemy
+                              {
+                                  positions.add(i-8);
+                                  break;
+                              }
+                              else  // if ally
+                              { break;  }
+                          }
+                          i = pos;
+                      }
+                      if(i<56)
+                      {
+                          while(i+8 < 63) //can go down and down
+                          {
+                              if(state[i+8] == 0) //if empty
+                              {
+                                  positions.add(i+8);
+                                  i += 8;
+                              }
+                              else if(state[i+8] < 7) //if enemy
+                              {
+                                  positions.add(i+8);
+                                  break;
+                              }
+                              else
+                              { break;  }
+                          }
+                      } 
+                }
+                return positions;
+            }
+            
+            public ArrayList<Integer> moveQueen(int pos, int player)
+            {
+                positions = new ArrayList<Integer>();
+                int i = pos;
+                
+                if(player == -1) //white player. for now used -1
+                {
+                    if(i%8 != 0)
+                    {
+                        while(i%8>0) //can go left 
+                        {
+                            if(state[i-1] == 0)     //if empty
+                            {
+                                positions.add(i-1);
+                                i--;
+                            }
+                            else if(state[i-1] >= 7 ) //if enemy
+                            {
+                                positions.add(i-1);
+                                break;
+                            }
+                            else    // if ally
+                            {   break;  }
+                        }
+                        i = pos;
+                    
+                        while(i%8>0 && i-9 > 0) //can go left and up
+                        {
+                            if(state[i-9] == 0)
+                            {
+                                positions.add(i-9);
+                                i -= 9;
+                            }
+                            else if(state[i-9] >= 7 ) //check one up and one left
+                            {
+                                positions.add(i-9);
+                                break;
+                            }
+                            else
+                            {   break;  }
+                        }
+                        i = pos;
+                        
+                        while(i % 8 > 0 && i+7 < 63) //can go left and down
+                        {
+                            if(state[i+7] == 0) // if empty
+                            {
+                                positions.add(i+7);
+                                i += 7;
+                            }
+                            else if(state[i+7] >= 7) //if enemy
+                            {
+                                positions.add(i+7);
+                                break;
+                            }
+                            else //if ally
+                            {   break;  }
+                        }                        
+                        i = pos;
+                      }
+                      if(i % 8 != 7)
+                      {
+                           while(i % 8 < 7 ) //can go right
+                           {
+                             if(state[i+1] == 0) // if empty
+                             {
+                                positions.add(i+1);
+                                i++;
+                             }
+                             else if(state[i+1] >= 7) //if enemy
+                             {
+                                positions.add(i+1);
+                                break;
+                             }
+                             else //if ally
+                             {   break;  }
+                          }                        
+                          i = pos;
+                          
+                          while(i % 8 < 7 && i-7 > 0) //can go right and up
+                          {
+                              if(state[i-7] == 0)   //if empty
+                              {
+                                  positions.add(i-7);
+                                  i -=7;
+                              }
+                              else if(state[i-7] >= 7)  //if enemy
+                              {
+                                  positions.add(i-7);
+                                  break;
+                              }
+                              else  // if ally
+                              { break;  }
+                          }
+                          i = pos;
+                          while(i % 8 < 7 && i+9 < 63) //can go right and down
+                          {
+                              if(state[i+9] == 0) //if empty
+                              {
+                                  positions.add(i+9);
+                                  i += 9;
+                              }
+                              else if(state[i+9] >= 7) //if enemy
+                              {
+                                  positions.add(i+9);
+                                  break;
+                              }
+                              else
+                              { break;  }
+                          }
+                      }
+                      if(i > 7)
+                      {
+                          while(i-8 > 0) //can go up
+                          {
+                              if(state[i-8] == 0)   //if empty
+                              {
+                                  positions.add(i-8);
+                                  i -=8;
+                              }
+                              else if(state[i-8] >= 7)  //if enemy
+                              {
+                                  positions.add(i-8);
+                                  break;
+                              }
+                              else  // if ally
+                              { break;  }
+                          }
+                          i = pos;
+                      }
+                      if(i<56)
+                      {
+                          while(i+8 < 63) //can go down
+                          {
+                              if(state[i+8] == 0) //if empty
+                              {
+                                  positions.add(i+8);
+                                  i += 8;
+                              }
+                              else if(state[i+8] >= 7) //if enemy
+                              {
+                                  positions.add(i+8);
+                                  break;
+                              }
+                              else
+                              { break;  }
+                          }
+                      }
+                   }
+                else    //black player
+                {
+                    if(i%8 != 0)
+                    {
+                        while(i%8>0) //can go left 
+                        {
+                            if(state[i-1] == 0)     //if empty
+                            {
+                                positions.add(i-1);
+                                i--;
+                            }
+                            else if(state[i-1] < 7 ) //if enemy
+                            {
+                                positions.add(i-1);
+                                break;
+                            }
+                            else    // if ally
+                            {   break;  }
+                        }
+                        i = pos;
+                    
+                        while(i%8>0 && i-9 > 0) //can go left and up
+                        {
+                            if(state[i-9] == 0)
+                            {
+                                positions.add(i-9);
+                                i -= 9;
+                            }
+                            else if(state[i-9] < 7 ) //check one up and one left
+                            {
+                                positions.add(i-9);
+                                break;
+                            }
+                            else
+                            {   break;  }
+                        }
+                        i = pos;
+                        
+                        while(i % 8 > 0 && i+7 < 63) //can go left and down
+                        {
+                            if(state[i+7] == 0) // if empty
+                            {
+                                positions.add(i+7);
+                                i += 7;
+                            }
+                            else if(state[i+7] < 7) //if enemy
+                            {
+                                positions.add(i+7);
+                                break;
+                            }
+                            else //if ally
+                            {   break;  }
+                        }                        
+                        i = pos;
+                      }
+                      if(i % 8 != 7)
+                      {
+                           while(i % 8 < 7 ) //can go right
+                           {
+                             if(state[i+1] == 0) // if empty
+                             {
+                                positions.add(i+1);
+                                i++;
+                             }
+                             else if(state[i+1] < 7) //if enemy
+                             {
+                                positions.add(i+1);
+                                break;
+                             }
+                             else //if ally
+                             {   break;  }
+                          }                        
+                          i = pos;
+                          
+                          while(i % 8 < 7 && i-7 > 0) //can go right and up
+                          {
+                              if(state[i-7] == 0)   //if empty
+                              {
+                                  positions.add(i-7);
+                                  i -=7;
+                              }
+                              else if(state[i-7] < 7)  //if enemy
+                              {
+                                  positions.add(i-7);
+                                  break;
+                              }
+                              else  // if ally
+                              { break;  }
+                          }
+                          i = pos;
+                          while(i % 8 < 7 && i+9 < 63) //can go right and down
+                          {
+                              if(state[i+9] == 0) //if empty
+                              {
+                                  positions.add(i+9);
+                                  i += 9;
+                              }
+                              else if(state[i+9] < 7) //if enemy
+                              {
+                                  positions.add(i+9);
+                                  break;
+                              }
+                              else
+                              { break;  }
+                          }
+                      }
+                      if(i > 7)
+                      {
+                          while(i-8 > 0) //can go up
+                          {
+                              if(state[i-8] == 0)   //if empty
+                              {
+                                  positions.add(i-8);
+                                  i -=8;
+                              }
+                              else if(state[i-8] < 7)  //if enemy
+                              {
+                                  positions.add(i-8);
+                                  break;
+                              }
+                              else  // if ally
+                              { break;  }
+                          }
+                          i = pos;
+                      }
+                      if(i<56)
+                      {
+                          while(i+8 < 63) //can go down
+                          {
+                              if(state[i+8] == 0) //if empty
+                              {
+                                  positions.add(i+8);
+                                  i += 8;
+                              }
+                              else if(state[i+8] < 7) //if enemy
+                              {
+                                  positions.add(i+8);
+                                  break;
+                              }
+                              else
+                              { break;  }
+                          }
+                      }
+                }
+                return positions;
+             }
+            
+            public ArrayList<Integer> moveKing(int pos, int player)
+            {
+                positions = new ArrayList<Integer>();                
+                
+                if(player == -1) //white player. for now used -1
+                {
+                    if(pos % 8 > 0) // not in leftmost file (a)
+                    {
+                        if(state[pos-1] == 0 || state[pos-1] >= 7)
+                            positions.add(pos-1);
+                        
+                        if(pos > 7) // not in top rank
+                        {
+                            if(state[pos-9] == 0 || state[pos-9] >= 7)
+                                positions.add(pos-9);
+                        }
+                        if(pos < 56) // not in bottom rank
+                        {
+                            if(state[pos+7] == 0 || state[pos+7] >= 7)
+                                positions.add(pos+7);
+                        }
+                    }
+                    if(pos % 8 < 7) // not in rightmost file (h)
+                    {
+                        if(state[pos+1] == 0 || state[pos+1] >= 7)
+                            positions.add(pos+1);
+                        
+                        if(pos > 7) //not in top rank
+                        {
+                            if(state[pos-7] == 0 || state[pos-7] >= 7)
+                                positions.add(pos-7);
+                        }
+                        if(pos < 56)
+                        {
+                            if(state[pos+9] == 0 || state[pos+9] >= 7)
+                                positions.add(pos+9);
+                        }
+                    }
+                    if(pos>7)
+                    {
+                        if(state[pos-8] == 0 || state[pos-8] >= 7)
+                            positions.add(pos-8);
+                    }
+                    if(pos < 56)
+                    {
+                        if(state[pos+8] == 0 || state[pos+8] >= 7)
+                            positions.add(pos+8);
+                    }
+                   
+                }
+                else
+                {
+                    if(pos % 8 > 0) // not in leftmost file (a)
+                    {
+                        if(state[pos-1] < 7)
+                            positions.add(pos-1);
+                        
+                        if(pos > 7) // not in top rank
+                        {
+                            if(state[pos-9] < 7)
+                                positions.add(pos-9);
+                        }
+                        if(pos < 56) // not in bottom rank
+                        {
+                            if(state[pos+7] < 7)
+                                positions.add(pos+7);
+                        }
+                    }
+                    if(pos % 8 < 7) // not in rightmost file (h)
+                    {
+                        if(state[pos+1] < 7)
+                            positions.add(pos+1);
+                        
+                        if(pos > 7) //not in top rank
+                        {
+                            if(state[pos-7] < 7)
+                                positions.add(pos-7);
+                        }
+                        if(pos < 56)
+                        {
+                            if(state[pos+9] < 7)
+                                positions.add(pos+9);
+                        }
+                    }
+                    if(pos>7)
+                    {
+                        if(state[pos-8] < 7)
+                            positions.add(pos-8);
+                    }
+                    if(pos < 56)
+                    {
+                        if(state[pos+8] < 7)
+                            positions.add(pos+8);
+                    }
+                }
+                return positions;
+            }
+            
+            
+         }
+                    
       }
+
+                
+            
+            
+      
           
-}
+
 
     
 
