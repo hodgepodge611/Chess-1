@@ -16,13 +16,21 @@ public class Gamestate {
     
     public Gamestate()
     {
-        state = new byte[64];
-        this.init();
+        byte[] temp = {
+            4, 2, 3, 5, 6, 3, 2, 4,
+            1, 1, 1, 1, 1, 1, 1, 1, 
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 
+            0, 0, 0, 0, 0, 0, 0, 0, 
+            0, 0, 0, 0, 0, 0, 0, 0, 
+            7, 7, 7, 7, 7, 7, 7, 7, 
+            10, 8, 9, 11, 12, 9, 8, 10
+        };
+        state = temp;
     }
     
-    public void init()
-    {
-        //code to load the HashMap with all the pieces and their starting locations
+    public Gamestate(byte[] currentState) {
+        state = currentState;
     }
     
           class GameMoves {
