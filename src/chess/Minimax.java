@@ -195,17 +195,21 @@ public class Minimax implements Cloneable
                         if (myState.state[pos] == 1) {
                             fileAWhitePawns++;
                             // backward pawns calculator
-                            if (myState.state[pos + 9] == 1 &&
-                                    myState.state[pos + 17] == 7) {
-                                backwardWhitePawns++; // friendly pawn diagonal that's blocking enemy pawn?
+                            if (pos <= 40) {
+                                if (myState.state[pos + 9] == 1 &&
+                                        myState.state[pos + 17] == 7) {
+                                    backwardWhitePawns++; // friendly pawn diagonal that's blocking enemy pawn?
+                                }
                             }
+                            
                         }
                         else if (myState.state[pos] == 7) {
                             fileABlackPawns++;
-                            // backward pawns calculator
-                            if (myState.state[pos - 7] == 7 && 
-                                    myState.state[pos - 15] == 1) {
-                                backwardBlackPawns++;
+                            if (pos >= 16) {      // backward pawns calculator
+                                if (myState.state[pos - 7] == 7 &&
+                                        myState.state[pos - 15] == 1) {
+                                    backwardBlackPawns++;
+                                }
                             }
                         }
                         pos += 8;
@@ -221,20 +225,24 @@ public class Minimax implements Cloneable
                     while (pos < 57) {
                         if (myState.state[pos] == 1) {
                             fileBWhitePawns++;
-                            if ((myState.state[pos + 7] == 1 && 
-                                    myState.state[pos + 15] == 7) ||
-                                    (myState.state[pos + 9] == 1 &&
-                                    myState.state[pos + 17] == 7)) {
-                                backwardWhitePawns++;
+                            if (pos <= 41) {
+                                if ((myState.state[pos + 7] == 1 &&
+                                        myState.state[pos + 15] == 7) ||
+                                        (myState.state[pos + 9] == 1 &&
+                                        myState.state[pos + 17] == 7)) {
+                                    backwardWhitePawns++;
+                                }
                             }
                         }
                         else if (myState.state[pos] == 7) {
                             fileBBlackPawns++;
-                            if ((myState.state[pos - 9] == 7 &&
-                                    myState.state[pos - 17] == 1) ||
-                                    (myState.state[pos - 7] == 7 &&
-                                    myState.state[pos - 15] == 1)) {
-                                backwardBlackPawns++;
+                            if (pos >= 17) {
+                                if ((myState.state[pos - 9] == 7 &&
+                                        myState.state[pos - 17] == 1) ||
+                                        (myState.state[pos - 7] == 7 &&
+                                        myState.state[pos - 15] == 1)) {
+                                    backwardBlackPawns++;
+                                }
                             }
                         }
                         pos += 8;
@@ -250,20 +258,24 @@ public class Minimax implements Cloneable
                     while (pos < 58) {
                         if (myState.state[pos] == 1) {
                             fileCWhitePawns++;
-                            if ((myState.state[pos + 7] == 1 && 
-                                    myState.state[pos + 15] == 7) ||
-                                    (myState.state[pos + 9] == 1 &&
-                                    myState.state[pos + 17] == 7)) {
-                                backwardWhitePawns++;
+                            if (pos <= 42) {
+                                if ((myState.state[pos + 7] == 1 &&
+                                        myState.state[pos + 15] == 7) ||
+                                    (   myState.state[pos + 9] == 1 &&
+                                        myState.state[pos + 17] == 7)) {
+                                    backwardWhitePawns++;
+                                }
                             }
                         }
                         else if (myState.state[pos] == 7) {
                             fileCBlackPawns++;
-                            if ((myState.state[pos - 9] == 7 && 
-                                    myState.state[pos - 17] == 1) ||
-                                    (myState.state[pos - 7] == 7 && 
-                                    myState.state[pos - 15] == 1)) {
-                                backwardBlackPawns++;
+                            if (pos >= 18) {
+                                if ((myState.state[pos - 9] == 7 &&
+                                        myState.state[pos - 17] == 1) ||
+                                        (myState.state[pos - 7] == 7 &&
+                                        myState.state[pos - 15] == 1)) {
+                                    backwardBlackPawns++;
+                                }
                             }
                         }
                         pos += 8;
@@ -279,20 +291,24 @@ public class Minimax implements Cloneable
                     while (pos < 59) {
                         if (myState.state[pos] == 1) {
                             fileDWhitePawns++;
-                            if ((myState.state[pos + 7] == 1 &&
-                                    myState.state[pos + 15] == 7) ||
-                                    (myState.state[pos + 9] == 1 && 
-                                    myState.state[pos + 17] == 7)) {
-                                backwardWhitePawns++;
+                            if (pos <= 43) {
+                                if ((myState.state[pos + 7] == 1 &&
+                                        myState.state[pos + 15] == 7) ||
+                                        (myState.state[pos + 9] == 1 &&
+                                        myState.state[pos + 17] == 7)) {
+                                    backwardWhitePawns++;
+                                }
                             }
                         }
                         else if (myState.state[pos] == 7) {
                             fileDBlackPawns++;
-                            if ((myState.state[pos - 9] == 7 && 
-                                    myState.state[pos - 17] == 1) ||
-                                    (myState.state[pos - 7] == 7 && 
-                                    myState.state[pos - 15] == 1)) {
-                                backwardBlackPawns++;
+                            if (pos >= 19) {
+                                if ((myState.state[pos - 9] == 7 &&
+                                        myState.state[pos - 17] == 1) ||
+                                        (myState.state[pos - 7] == 7 &&
+                                        myState.state[pos - 15] == 1)) {
+                                    backwardBlackPawns++;
+                                }
                             }
                         }
                         pos += 8;
@@ -308,20 +324,24 @@ public class Minimax implements Cloneable
                     while (pos < 60) {
                         if (myState.state[pos] == 1) {
                             fileEWhitePawns++;
-                            if ((myState.state[pos + 7] == 1 && 
-                                    myState.state[pos + 15] == 7) ||
-                                    (myState.state[pos + 9] == 1 &&
-                                    myState.state[pos + 17] == 7)) {
-                                backwardWhitePawns++;
+                            if (pos <= 44) {
+                                if ((myState.state[pos + 7] == 1 &&
+                                        myState.state[pos + 15] == 7) ||
+                                        (myState.state[pos + 9] == 1 &&
+                                        myState.state[pos + 17] == 7)) {
+                                    backwardWhitePawns++;
+                                }
                             }
                         }
                         else if (myState.state[pos] == 7) {
                             fileEBlackPawns++;
-                            if ((myState.state[pos - 9] == 7 && 
-                                    myState.state[pos - 17] == 1) ||
-                                    (myState.state[pos - 7] == 7 && 
-                                    myState.state[pos - 15] == 1)) {
-                                backwardBlackPawns++;
+                            if (pos >= 20) {
+                                if ((myState.state[pos - 9] == 7 &&
+                                        myState.state[pos - 17] == 1) ||
+                                        (myState.state[pos - 7] == 7 &&
+                                        myState.state[pos - 15] == 1)) {
+                                    backwardBlackPawns++;
+                                }
                             }
                         }
                         pos += 8;
@@ -337,20 +357,24 @@ public class Minimax implements Cloneable
                     while (pos < 61) {
                         if (myState.state[pos] == 1) {
                             fileFWhitePawns++;
-                            if ((myState.state[pos + 7] == 1 && 
-                                    myState.state[pos + 15] == 7) ||
-                                    (myState.state[pos + 9] == 1 && 
-                                    myState.state[pos + 17] == 7)) {
-                                backwardWhitePawns++;
+                            if (pos <= 45) {
+                                if ((myState.state[pos + 7] == 1 &&
+                                        myState.state[pos + 15] == 7) ||
+                                        (myState.state[pos + 9] == 1 &&
+                                        myState.state[pos + 17] == 7)) {
+                                    backwardWhitePawns++;
+                                }
                             }
                         }
                         else if (myState.state[pos] == 7) {
                             fileFBlackPawns++;
-                            if ((myState.state[pos - 9] == 7 && 
-                                    myState.state[pos - 17] == 1) ||
-                                    (myState.state[pos - 7] == 7 && 
-                                    myState.state[pos - 15] == 1)) {
-                                backwardBlackPawns++;
+                            if (pos >= 21) {
+                                if ((myState.state[pos - 9] == 7 &&
+                                        myState.state[pos - 17] == 1) ||
+                                        (myState.state[pos - 7] == 7 &&
+                                        myState.state[pos - 15] == 1)) {
+                                    backwardBlackPawns++;
+                                }
                             }
                         }
                         pos += 8;
@@ -366,20 +390,24 @@ public class Minimax implements Cloneable
                     while (pos < 62) {
                         if (myState.state[pos] == 1) {
                             fileGWhitePawns++;
-                            if ((myState.state[pos + 7] == 1 && 
-                                    myState.state[pos + 15] == 7) ||
-                                    (myState.state[pos + 9] == 1 && 
-                                    myState.state[pos + 17] == 7)) {
-                                backwardWhitePawns++;
+                            if (pos <= 46) {
+                                if ((myState.state[pos + 7] == 1 &&
+                                        myState.state[pos + 15] == 7) ||
+                                        (myState.state[pos + 9] == 1 &&
+                                        myState.state[pos + 17] == 7)) {
+                                    backwardWhitePawns++;
+                                }
                             }
                         }
                         else if (myState.state[pos] == 7) {
                             fileGBlackPawns++;
-                            if ((myState.state[pos - 9] == 7 && 
-                                    myState.state[pos - 17] == 1) ||
-                                    (myState.state[pos - 7] == 7 && 
-                                    myState.state[pos - 15] == 1)) {
-                                backwardBlackPawns++;
+                            if (pos >= 22) {
+                                if ((myState.state[pos - 9] == 7 &&
+                                        myState.state[pos - 17] == 1) ||
+                                        (myState.state[pos - 7] == 7 &&
+                                        myState.state[pos - 15] == 1)) {
+                                    backwardBlackPawns++;
+                                }
                             }
                         }
                         pos += 8;
@@ -391,20 +419,24 @@ public class Minimax implements Cloneable
                         doubledBlackPawns += fileGBlackPawns;
                     }
                     break;
-                    case 7:
+                case 7:
                     while (pos < 63) {
                         if (myState.state[pos] == 1) {
                             fileHWhitePawns++;
-                            if (myState.state[pos + 7] == 1 && 
-                                    myState.state[pos + 15] == 7) {
-                                backwardWhitePawns++;
+                            if (pos <= 47) {
+                                if (myState.state[pos + 7] == 1 &&
+                                        myState.state[pos + 15] == 7) {
+                                    backwardWhitePawns++;
+                                }
                             }
                         }
                         else if (myState.state[pos] == 7) {
                             fileHBlackPawns++;
-                            if (myState.state[pos - 9] == 7 && 
-                                    myState.state[pos - 17] == 1) {
-                                backwardBlackPawns++;
+                            if (pos >= 23) {
+                                if (myState.state[pos - 9] == 7 &&
+                                        myState.state[pos - 17] == 1) {
+                                    backwardBlackPawns++;
+                                }
                             }
                         }
                         pos += 8;
