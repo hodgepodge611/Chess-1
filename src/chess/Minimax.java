@@ -680,8 +680,16 @@ public class Minimax implements Cloneable
         //move[0] holds inital positon, move[1] holds resulting position
         //myState.state[position] holds the number of that position.
         
-        Byte movingPiece = myState.state[move[0]];
-        myState.state[move[1]] = movingPiece;
+        if (myState.state[move[0]] == 1 && move[1] >= 56) { //Pawn reaching end?
+            myState.state[move[1]] = (byte) 5;                     //Queen him
+        }
+        else if (myState.state[move[0]] == 7 && move[1] <= 7) {
+            myState.state[move[1]] = (byte) 11;
+        }
+        else {
+            myState.state[move[1]] = myState.state[move[0]];
+        }
+        myState.state[move[0]] = (byte) 0;  // Replace the starting position with 0
         
     }
     public final void doMove(int[] move)
