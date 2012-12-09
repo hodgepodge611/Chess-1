@@ -532,7 +532,7 @@ public class Minimax implements Cloneable
                 fileDBlackPawns + fileEBlackPawns + fileFBlackPawns + 
                 fileGBlackPawns +fileHWhitePawns);
         
-        if (this.getPlayer() == 1) {// White player 
+        if (this.getPlayer() == -1) {// White player 
             return (int)((200 * (whiteKings - blackKings)) +
                     (9 * (whiteQueens - blackQueens)) +
                     (5 * (whiteRooks - blackRooks)) +
