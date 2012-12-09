@@ -39,7 +39,7 @@ public class Minimax implements Cloneable
             return;
         }
 
-        LinkedList moves = this.listAllLegalMoves();
+        LinkedList<int[]> moves = this.listAllLegalMoves();
         if(moves.isEmpty())
         {
             this.staleMate();
@@ -52,9 +52,9 @@ public class Minimax implements Cloneable
         }
 
         int     bestScore = this.player == Minimax.MAX_TURN ? Minimax.MINI_HAS_WON : Minimax.MAX_HAS_WON;
-        Object  bestMove  = null;
+        int[]  bestMove  = null;
 
-        for(Object move : moves)
+        for(int[] move : moves)
         {
             Minimax tempBoard = (Minimax)this.clone();
             tempBoard.doMove(move);
@@ -75,13 +75,13 @@ public class Minimax implements Cloneable
         {
             return currentScore;
         }
-        LinkedList moves = this.listAllLegalMoves();
+        LinkedList<int[]> moves = this.listAllLegalMoves();
         if(moves.isEmpty())
         {
             return Minimax.STALE_MATE;
         }
         int bestScore = 0;
-        for(Object move : moves)
+        for(int[] move : moves)
         {
             Minimax tempBoard = (Minimax)this.clone();
             tempBoard.doMove(move);
@@ -152,7 +152,7 @@ public class Minimax implements Cloneable
         return 0;
     }
     
-    public LinkedList listAllLegalMoves()
+    public LinkedList<int[]> listAllLegalMoves()
     {
         Gamestate.GameMoves gm = myState.new GameMoves();
         LinkedList<int[]> moves = new LinkedList<int[]>();
@@ -265,11 +265,20 @@ public class Minimax implements Cloneable
         return moves;
     }
     
-    public void moveAction(Object move)
+    public void moveAction(int[] move)
     {
+        //work with myState.state as your byte array.perform move then handle
+        //conditions like remove oppenent piece or get piece back (which we need to implement eventually)
+        // can use this.player to get who holds current move(-1=W , 1=B)
+        //or can just simply tell by what number is in the initial position myState.state[move[0]] 
+        //move[0] holds inital positon, move[1] holds resulting position
+        //myState.state[position] holds the number of that position.
+        
+        Byte movingPiece = myState.state[move[0]];
+        myState.state[move[1]] = movingPiece;
         
     }
-    public final void doMove(Object move)
+    public final void doMove(int[] move)
     {
         this.moveAction(move);
         player *= -1;
