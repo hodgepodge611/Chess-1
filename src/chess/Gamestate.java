@@ -12,17 +12,20 @@ import java.util.HashMap;
  */
 public class Gamestate {
     
-    byte[] state;
+   public byte[] state;
     
-    public Gamestate()
+   public Gamestate()
     {
-        state = new byte[64];
-        this.init();
-    }
-    
-    public void init()
-    {
-        //code to load the HashMap with all the pieces and their starting locations
+        state = new byte[]{
+            4, 2, 3, 5, 6, 3, 2, 4,
+            1, 1, 1, 1, 1, 1, 1, 1, 
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 
+            0, 0, 0, 0, 0, 0, 0, 0, 
+            0, 0, 0, 0, 0, 0, 0, 0, 
+            7, 7, 7, 7, 7, 7, 7, 7, 
+            10, 8, 9, 11, 12, 9, 8, 10
+        };
     }
     
           class GameMoves {
