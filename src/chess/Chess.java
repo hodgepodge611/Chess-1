@@ -23,14 +23,19 @@ import org.json.JSONObject;
  */
 public class Chess {
     
-    static Minimax board = new Minimax();
+    Minimax board;
+    
+    public Chess()
+    {
+        board = new Minimax();
+    }
     
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException, JSONException, InterruptedException {
         
-       
+        Chess newGame = new Chess();
         
         final int maxSearchDepth = 2;
         final String gameId = "116"; // Replace with game ID
@@ -64,7 +69,7 @@ public class Chess {
             if (!json.getString("lastmove").isEmpty()) {
                 move = manageMove(json.getString("lastmove"));
                 System.out.println("The opponent's move is " + json.getString("lastmove") + ".");
-                kingSiezed = board.doMove(move);
+                kingSiezed = newGame.board.doMove(move);
                 if (kingSiezed) {
                     break;
                 }
@@ -73,9 +78,9 @@ public class Chess {
                 System.out.println("Oh wait, we're actually going first!");
             }
             
-            move = board.makePerfectMove(maxSearchDepth);
-            System.out.println("Our move is " + stringifyMove(move));
-            pushRequest = new HttpGet(baseUrl + "move/" + credentials + stringifyMove(move) + "/");
+            move = newGame.board.makePerfectMove(maxSearchDepth);
+            System.out.println("Our move is " + stringifyMove(move, newGame.board.myState.state[move[1]]));
+            pushRequest = new HttpGet(baseUrl + "move/" + credentials + stringifyMove(move, newGame.board.myState.state[move[1]]) + "/");
             response = client.execute(pushRequest);
             EntityUtils.consume(response.getEntity());
             if (move.length == 3 && move[2] == 1) {
@@ -163,12 +168,11 @@ public class Chess {
         byte offset = (byte) ((int) components[0] - 97);
         return (byte) (start + offset);
    }
-    private static String stringifyMove(int[] move) 
+    private static String stringifyMove(int[] move, int piece) 
     {
         String finalMove = "";
         int start = move[0];
         int end = move[1];
-        int  piece = board.myState.state[move[1]];
         switch (piece)
         {
             case 1:
@@ -307,10 +311,10 @@ public class Chess {
                 finalMove += "8";
                 break;  
         }
-         if (board.myState.state[move[0]] == 1 && move[1] >= 56) { //Pawn reaching end?
+         if (piece == 1 && move[1] >= 56) { //Pawn reaching end?
             finalMove+= "Q";                   //Queen him
         }
-        else if (board.myState.state[move[0]] == 7 && move[1] <= 7) {
+        else if (piece == 7 && move[1] <= 7) {
             finalMove+= "Q";
         }
         return finalMove;

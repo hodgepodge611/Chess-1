@@ -27,6 +27,16 @@ public class Gamestate {
             10, 8, 9, 11, 12, 9, 8, 10
         };
     }
+   
+   public Gamestate(Gamestate myState)
+   {
+       state = myState.state;
+   }
+   
+   public void changeState(byte[] newState)
+   {
+       state = newState;
+   }
     
           class GameMoves {
     

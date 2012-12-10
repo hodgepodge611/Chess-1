@@ -29,13 +29,18 @@ public class Minimax implements Cloneable
     {
         myState = new Gamestate();
     }
+    
+    public Minimax(Gamestate state)
+    {
+        myState = state;
+    }
 
-    public final int getPlayer()
+    public int getPlayer()
     {
         return this.player;
     }
 
-    public final int[] makePerfectMove(int maxSearchDepth)
+    public int[] makePerfectMove(int maxSearchDepth)
     {
         boolean kingSeized;
         if(maxSearchDepth == 0)
@@ -61,16 +66,19 @@ public class Minimax implements Cloneable
         int     bestScore = this.player == Minimax.MAX_TURN ? Minimax.MINI_HAS_WON : Minimax.MAX_HAS_WON;
         int[]  bestMove  = null;
 
+        byte[] originalState = this.myState.state;
         for(int[] move : moves)
         {
-            Minimax tempBoard = (Minimax)this.clone();
+            Minimax tempBoard = new Minimax();
+            tempBoard.myState.changeState(originalState);
             tempBoard.doMove(move);
-            int score = evaluate(maxSearchDepth == Minimax.UNLIMITED_SEARCH_DEPTH ? Minimax.UNLIMITED_SEARCH_DEPTH : maxSearchDepth - 1, new AlphaBeta());
+            int score = tempBoard.evaluate(maxSearchDepth == Minimax.UNLIMITED_SEARCH_DEPTH ? Minimax.UNLIMITED_SEARCH_DEPTH : maxSearchDepth - 1, new AlphaBeta());
             if(score * player < bestScore || bestMove == null)
             {
                 bestScore = score * player;
                 bestMove  = move;
             }
+            this.myState.changeState(originalState);
         }
         kingSeized = doMove(bestMove);
         if(kingSeized)
@@ -79,7 +87,7 @@ public class Minimax implements Cloneable
             return(bestMove);
     }
 
-    public final int evaluate(int maxSearchDepth, AlphaBeta alphaBeta)
+    public int evaluate(int maxSearchDepth, AlphaBeta alphaBeta)
     {
         int currentScore = this.getCurrentScore();
         if(currentScore == Minimax.MINI_HAS_WON || currentScore == Minimax.MAX_HAS_WON)
@@ -92,9 +100,11 @@ public class Minimax implements Cloneable
             return Minimax.STALE_MATE;
         }
         int bestScore = 0;
+        byte[] originalState = this.myState.state;
         for(int[] move : moves)
         {
-            Minimax tempBoard = (Minimax)this.clone();
+            Minimax tempBoard = new Minimax();
+            tempBoard.myState.changeState(originalState);
             tempBoard.doMove(move);
             int score;
             if(maxSearchDepth == 0)
@@ -608,6 +618,7 @@ public class Minimax implements Cloneable
         LinkedList<int[]> moves = new LinkedList<int[]>();
         for(int i = 0; i < myState.state.length; i++)
         {
+            
             ArrayList<Integer> tempList = new ArrayList<Integer>();
             byte temp = myState.state[i];
             if(temp == 1 && this.getPlayer() == -1)
@@ -723,6 +734,7 @@ public class Minimax implements Cloneable
         //or can just simply tell by what number is in the initial position myState.state[move[0]] 
         //move[0] holds inital positon, move[1] holds resulting position
         //myState.state[position] holds the number of that position.
+        
         if(myState.state[move[0]] < 7 && myState.state[move[1]] == 12 )
             return true;
         else if(myState.state[move[0]] >= 7 && myState.state[move[1]] == 6)
@@ -739,10 +751,10 @@ public class Minimax implements Cloneable
         myState.state[move[0]] = (byte) 0;  // Replace the starting position with 0
         return false;
     }
-    public final boolean doMove(int[] move)
+    public boolean doMove(int[] move)
     {
         boolean answer = this.moveAction(move);
-        player *= -1;
+        this.player *= -1;
         return answer;
     }
     public void staleMate()
