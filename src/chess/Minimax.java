@@ -7,7 +7,6 @@ package chess;
 import chess.Gamestate.GameMoves;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.HashMap;
 
 /**
  *
