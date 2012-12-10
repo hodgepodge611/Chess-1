@@ -78,7 +78,7 @@ public class Chess {
             pushRequest = new HttpGet(baseUrl + "move/" + credentials + stringifyMove(move) + "/");
             response = client.execute(pushRequest);
             EntityUtils.consume(response.getEntity());
-            if (move[3] == 1) {
+            if (move.length == 3 && move[2] == 1) {
                 break;
             }
         }
