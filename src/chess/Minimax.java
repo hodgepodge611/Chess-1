@@ -612,7 +612,7 @@ public class Minimax implements Cloneable
             byte temp = myState.state[i];
             if(temp == 1 && this.getPlayer() == -1)
             {
-                tempList = gm.movePawn(temp, -1);
+                tempList = gm.movePawn(i, -1);
                 for(int j = 0; j < tempList.size(); j++)
                 {
                     moves.add(new int[]{i, tempList.get(j)});                    
@@ -622,7 +622,7 @@ public class Minimax implements Cloneable
             }
             if(temp == 7 && this.getPlayer() == 1)
             {
-                tempList = gm.movePawn(temp, 1);
+                tempList = gm.movePawn(i, 1);
                 for(int j = 0; j < tempList.size(); j++)
                 {
                     moves.add(new int[]{i, tempList.get(j)});                    
@@ -631,7 +631,7 @@ public class Minimax implements Cloneable
             }
             if(temp == 2 && this.getPlayer() == -1)
             {
-                tempList = gm.moveKnight(temp, -1);
+                tempList = gm.moveKnight(i, -1);
                 for(int j = 0; j < tempList.size(); j++)
                 {
                     moves.add(new int[]{i,tempList.get(j)});
@@ -639,7 +639,7 @@ public class Minimax implements Cloneable
             }
             if(temp == 8 && this.getPlayer() == 1)
             {
-                tempList = gm.moveKnight(temp, 1);
+                tempList = gm.moveKnight(i, 1);
                 for(int j = 0; j < tempList.size(); j++)
                 {
                     moves.add(new int[]{i,tempList.get(j)});
@@ -647,7 +647,7 @@ public class Minimax implements Cloneable
             }
             if(temp == 3 && this.getPlayer() == -1)
             {
-                tempList = gm.moveBishop(temp, -1);
+                tempList = gm.moveBishop(i, -1);
                 for(int j = 0; j < tempList.size(); j++)
                 {
                     moves.add(new int[]{i,tempList.get(j)});
@@ -655,7 +655,7 @@ public class Minimax implements Cloneable
             }
             if(temp == 9 && this.getPlayer() == 1)
             {
-                tempList = gm.moveBishop(temp, 1);
+                tempList = gm.moveBishop(i, 1);
                 for(int j = 0; j < tempList.size(); j++)
                 {
                     moves.add(new int[]{i,tempList.get(j)});
@@ -663,7 +663,7 @@ public class Minimax implements Cloneable
             }
             if(temp == 4 && this.getPlayer() == -1)
             {
-                tempList = gm.moveRook(temp, -1);
+                tempList = gm.moveRook(i, -1);
                 for(int j = 0; j < tempList.size(); j++)
                 {
                     moves.add(new int[]{i,tempList.get(j)});
@@ -671,7 +671,7 @@ public class Minimax implements Cloneable
             }
             if(temp == 10 && this.getPlayer() == 1)
             {
-                tempList = gm.moveRook(temp, 1);
+                tempList = gm.moveRook(i, 1);
                 for(int j = 0; j < tempList.size(); j++)
                 {
                     moves.add(new int[]{i,tempList.get(j)});
@@ -679,7 +679,7 @@ public class Minimax implements Cloneable
             }
             if(temp == 5 && this.getPlayer() == -1)
             {
-                tempList = gm.moveQueen(temp, -1);
+                tempList = gm.moveQueen(i, -1);
                 for(int j = 0; j < tempList.size(); j++)
                 {
                     moves.add(new int[]{i,tempList.get(j)});
@@ -687,7 +687,7 @@ public class Minimax implements Cloneable
             }
             if(temp == 11 && this.getPlayer() == 1)
             {
-                tempList = gm.moveQueen(temp, 1);
+                tempList = gm.moveQueen(i, 1);
                 for(int j = 0; j < tempList.size(); j++)
                 {
                     moves.add(new int[]{i,tempList.get(j)});
@@ -695,7 +695,7 @@ public class Minimax implements Cloneable
             }
             if(temp == 6 && this.getPlayer() == -1)
             {
-                tempList = gm.moveKing(temp, -1);
+                tempList = gm.moveKing(i, -1);
                 for(int j = 0; j < tempList.size(); j++)
                 {
                     moves.add(new int[]{i,tempList.get(j)});
@@ -703,7 +703,7 @@ public class Minimax implements Cloneable
             }
             if(temp == 7 && this.getPlayer() == 1)
             {
-                tempList = gm.moveKing(temp, 1);
+                tempList = gm.moveKing(i, 1);
                 for(int j = 0; j < tempList.size(); j++)
                 {
                     moves.add(new int[]{i,tempList.get(j)});

@@ -33,7 +33,7 @@ public class Chess {
        
         
         final int maxSearchDepth = 2;
-        final String gameId = "104"; // Replace with game ID
+        final String gameId = "116"; // Replace with game ID
         final String password = "32c68cae"; // Replace with team secret
         final int team = 1; // replace with team number
         final String baseUrl = "http://www.bencarle.com/chess/";
