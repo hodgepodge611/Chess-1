@@ -168,7 +168,7 @@ public class Chess {
         String finalMove = "";
         int start = move[0];
         int end = move[1];
-        int  piece = board.myState.state[move[0]];
+        int  piece = board.myState.state[move[1]];
         switch (piece)
         {
             case 1:
