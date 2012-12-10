@@ -4,18 +4,16 @@
  */
 package chess;
 
-    import java.io.BufferedReader;
-    import java.io.IOException;
-    import java.io.InputStreamReader;
-    import org.apache.http.HttpRequest;
-    import org.apache.http.HttpResponse;
-    import org.apache.http.client.HttpClient;
-    import org.apache.http.client.methods.HttpGet;
-    import org.apache.http.impl.client.DefaultHttpClient;
-    import org.apache.http.util.EntityUtils;
-    import org.apache.http.util.EntityUtils;
-    import org.json.JSONException;
-    import org.json.JSONObject;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 
@@ -35,10 +33,10 @@ public class Chess {
        
         
         final int maxSearchDepth = 2;
-        final String gameId = "52"; // Replace with game ID
-        final String password = "a923cc0"; // Replace with team secret
+        final String gameId = "104"; // Replace with game ID
+        final String password = "32c68cae"; // Replace with team secret
         final int team = 1; // replace with team number
-        final String baseUrl = "http://www.bencarle.come/chess/";
+        final String baseUrl = "http://www.bencarle.com/chess/";
         final String credentials = gameId + "/" + team + "/" + password + "/";
         
         HttpClient client = new DefaultHttpClient();

@@ -38,86 +38,93 @@ public class Gamestate {
                 positions = new ArrayList<Integer>();
                 
                 if(player == -1) //white player. for now used -1
-                {                    
-                  if(state[pos+8] == 0)     //make sure the next rank is empty
-                  {                    
-                     positions.add(pos+8);
-                     
-                     if(pos >= 8 && pos <= 15)  //can pawn move two ranks?
-                     {
-                         if(state[pos+16] == 0) //is two ranks ahead empty?                            
-                         { positions.add(pos+16); }
-                     }
-                  }
-                  else if(state[pos+8] == 7)                                         
+                {
+                  if(pos+8 < 63)
                   {
-                      if( pos % 8 > 0) //make sure we arent in file a
-                      {
-                          if(state[pos+7] == 0)
-                          {
-                              positions.add(pos+7);
-                          }
-                      }
-                      if( pos % 8 < 7) // make sure we arent in file h
-                      {
+                     if(state[pos+8] == 0)     //make sure the next rank is empty
+                     {                    
+                        positions.add(pos+8);
+                     
+                        if(pos >= 8 && pos <= 15)  //can pawn move two ranks?
+                        {
+                             if(state[pos+16] == 0) //is two ranks ahead empty?                            
+                                { positions.add(pos+16); }
+                        }
+                     }
+                     else if(state[pos+8] == 7)                                         
+                     {
+                         if( pos % 8 > 0) //make sure we arent in file a
+                         {
+                             if(state[pos+7] == 0)
+                             {
+                                 positions.add(pos+7);
+                             }
+                         }
+                        if( pos % 8 < 7) // make sure we arent in file h
+                        {
                           if(state[pos+9] == 0)
                           {
                               positions.add(pos+9);
                           }
+                        }
                       }
-                  }
-                  if(pos % 8 > 0)        // if not in file A              
-                  {                     
-                     if(state[pos+7] >= 7) //if occupied by enemy
-                        positions.add(pos+7);
-                  }
-                  if(pos % 8 < 7)
-                  {
-                      if(state[pos+9] >= 7)
+                  
+                      if(pos % 8 > 0)        // if not in file A              
+                      {                     
+                         if(state[pos+7] >= 7) //if occupied by enemy
+                            positions.add(pos+7);
+                      }
+                      if(pos % 8 < 7)
+                      {
+                        if(state[pos+9] >= 7)
                           positions.add(pos+9);
-                  }
+                      }
+                   }
                 }
                 else
-                {                                    
-                  if(state[pos-8] == 0)     //make sure the next rank is empty
-                  {                    
-                     positions.add(pos-8);
+                {
+                  if(pos-8 > 0)
+                  {    
+                    if(state[pos-8] == 0)     //make sure the next rank is empty
+                    {                     
+                        positions.add(pos-8);
                      
-                     if(pos >= 48 && pos <= 55)  //can pawn move two ranks?
-                     {
-                         if(state[pos-16] == 0) //is two ranks ahead empty?                            
-                         { positions.add(pos-16); }
-                     }
-                  }
-                  else if(state[pos-8] == 7)                                         
-                  {
-                      if( pos % 8 > 0) //make sure we arent in file a
-                      {
-                          if(state[pos-7] == 0)
-                          {
+                        if(pos >= 48 && pos <= 55)  //can pawn move two ranks?
+                        {
+                            if(state[pos-16] == 0) //is two ranks ahead empty?                            
+                            { positions.add(pos-16); }
+                        }  
+                    }
+                    else if(state[pos-8] == 7)                                         
+                    {
+                         if( pos % 8 > 0) //make sure we arent in file a
+                         {
+                            if(state[pos-7] == 0)
+                            {
                               positions.add(pos-7);
+                            }
+                         }
+                         if( pos % 8 < 7) // make sure we arent in file h
+                         {
+                             if(state[pos-9] == 0)
+                             {
+                                positions.add(pos-9);
+                             }
                           }
-                      }
-                      if( pos % 8 < 7) // make sure we arent in file h
-                      {
-                          if(state[pos-9] == 0)
-                          {
-                              positions.add(pos-9);
-                          }
-                      }
-                  }
-                  if(pos % 8 > 0)        // if not in file A              
-                  {                     
-                     if(state[pos-7] < 7 && state[pos-7] > 0) //if occupied by enemy
-                        positions.add(pos-7);
-                  }
-                  if(pos % 8 < 7)
-                  {
-                      if(state[pos-9] < 7 && state[pos-9] > 0)
+                    }
+                    if(pos % 8 > 0)        // if not in file A              
+                    {                     
+                        if(state[pos-7] < 7 && state[pos-7] > 0) //if occupied by enemy
+                            positions.add(pos-7);
+                    }
+                    if(pos % 8 < 7)
+                    {
+                        if(state[pos-9] < 7 && state[pos-9] > 0)
                           positions.add(pos-9);
+                    }
                   }
                   
-              }
+                }
                   
               
               return positions;
