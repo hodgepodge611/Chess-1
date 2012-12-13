@@ -1,7 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this template, choose Tools | Templates
+* and open the template in the editor.
+*/
 package chess;
 
 import java.io.BufferedReader;
@@ -18,27 +18,16 @@ import org.json.JSONObject;
 
 
 /**
- *
- * @author Tyler
- */
+*
+* @author Tyler
+*/
 public class Chess {
-    
-    Minimax board;
-    
-    public Chess()
-    {
-        board = new Minimax();
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
+/**
+* @param args the command line arguments
+*/
     public static void main(String[] args) throws IOException, JSONException, InterruptedException {
-        
-        Chess newGame = new Chess();
-        
         final int maxSearchDepth = 2;
-        final String gameId = "116"; // Replace with game ID
+        final String gameId = "286"; // Replace with game ID
         final String password = "32c68cae"; // Replace with team secret
         final int team = 1; // replace with team number
         final String baseUrl = "http://www.bencarle.com/chess/";
@@ -51,8 +40,9 @@ public class Chess {
         BufferedReader reader;
         JSONObject json = null;
         
+        Gamestate board = new Gamestate();
+        Minimax search = new Minimax(board, -1, maxSearchDepth);
         int[] move;
-        boolean kingSiezed;
         
        
         while (true) {
@@ -69,8 +59,8 @@ public class Chess {
             if (!json.getString("lastmove").isEmpty()) {
                 move = manageMove(json.getString("lastmove"));
                 System.out.println("The opponent's move is " + json.getString("lastmove") + ".");
-                kingSiezed = newGame.board.doMove(move);
-                if (kingSiezed) {
+                byte removedPiece = board.doMove(move);
+                if (removedPiece == 12 || removedPiece == 6) {
                     break;
                 }
             }
@@ -78,9 +68,12 @@ public class Chess {
                 System.out.println("Oh wait, we're actually going first!");
             }
             
-            move = newGame.board.makePerfectMove(maxSearchDepth);
-            System.out.println("Our move is " + stringifyMove(move, newGame.board.myState.state[move[1]]));
-            pushRequest = new HttpGet(baseUrl + "move/" + credentials + stringifyMove(move, newGame.board.myState.state[move[1]]) + "/");
+            search.makePerfectMove(maxSearchDepth);
+            move = search.getBestMove();
+            board.doMove(move);
+            System.out.println("Our move is " + stringifyMove(move, board.state[move[1]]));
+            pushRequest = new HttpGet(baseUrl + "move/" + credentials + stringifyMove(move, board.state[move[1]]) + "/");
+            System.out.println(baseUrl + "move/" + credentials + stringifyMove(move, board.state[move[1]]) + "/");
             response = client.execute(pushRequest);
             EntityUtils.consume(response.getEntity());
             if (move.length == 3 && move[2] == 1) {
@@ -89,14 +82,14 @@ public class Chess {
         }
         System.out.println("Game over!");
     }
-    private static int[] manageMove(String move) 
+    private static int[] manageMove(String move)
     {
       char startFile = move.charAt(1);
       int startRank = Integer.parseInt(move.substring(2,3));
       int startPos = 0;
       switch (startFile)
       {
-          case 'a': 
+          case 'a':
               startPos = (startRank - 1) * 8;
               break;
           case 'b':
@@ -118,13 +111,13 @@ public class Chess {
               startPos = ((startRank - 1) * 8) + 6;
               break;
           case 'h':
-              startPos = ((startRank - 1) * 8) + 7;  
+              startPos = ((startRank - 1) * 8) + 7;
               break;
               
       }
       char endFile = move.charAt(3);
       int endRank;
-      if(move.length()==6)
+      if(move.length() ==6)
         endRank = Integer.parseInt(move.substring(4,5));
       else
         endRank = Integer.parseInt(move.substring(4));
@@ -132,7 +125,7 @@ public class Chess {
       
      switch (endFile)
       {
-          case 'a': 
+          case 'a':
               endPos = (startRank - 1) * 8;
               break;
           case 'b':
@@ -154,21 +147,14 @@ public class Chess {
               endPos = ((startRank - 1) * 8) + 6;
               break;
           case 'h':
-              endPos = ((startRank - 1) * 8) + 7; 
+              endPos = ((startRank - 1) * 8) + 7;
               break;
               
       }
       return new int[]{startPos, endPos};
     }
-
-    private static byte toByte(String location) 
-    {
-        char[] components = location.toCharArray();
-        byte start = (byte) (((10 - ((int) (components[1]) - 48)) * 10) + 1);
-        byte offset = (byte) ((int) components[0] - 97);
-        return (byte) (start + offset);
-   }
-    private static String stringifyMove(int[] move, int piece) 
+    
+    private static String stringifyMove(int[] move, int piece)
     {
         String finalMove = "";
         int start = move[0];
@@ -226,10 +212,10 @@ public class Chess {
                 break;
             case 7:
                 finalMove += "h";
-                break;  
+                break;
         }
         
-        switch((start/8) + 1)
+        switch((start/8))
         {
             case 0:
                 finalMove += "1";
@@ -254,7 +240,7 @@ public class Chess {
                 break;
             case 7:
                 finalMove += "8";
-                break;  
+                break;
         }
         switch(end % 8)
         {
@@ -281,10 +267,10 @@ public class Chess {
                 break;
             case 7:
                 finalMove += "h";
-                break;  
+                break;
         }
         
-        switch((end/8) + 1)
+        switch((end/8))
         {
             case 0:
                 finalMove += "1";
@@ -309,22 +295,15 @@ public class Chess {
                 break;
             case 7:
                 finalMove += "8";
-                break;  
+                break;
         }
          if (piece == 1 && move[1] >= 56) { //Pawn reaching end?
-            finalMove+= "Q";                   //Queen him
+            finalMove+= "Q"; //Queen him
         }
         else if (piece == 7 && move[1] <= 7) {
             finalMove+= "Q";
         }
         return finalMove;
-  }
-
-    private static String toString(byte location) 
-    {
-        char file = (char) ((location % 10) + 96);
-        int rank = 10 - (location / 10);
-        return file + "" + rank;
-  }
-    
+    }
+}
 }
