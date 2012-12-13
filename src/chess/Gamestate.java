@@ -1,15 +1,14 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this template, choose Tools | Templates
+* and open the template in the editor.
+*/
 package chess;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 /**
- *
- * @author Tyler
- */
+*
+* @author Tyler
+*/
 public class Gamestate {
     
    public byte[] state;
@@ -18,12 +17,12 @@ public class Gamestate {
     {
         state = new byte[]{
             4, 2, 3, 5, 6, 3, 2, 4,
-            1, 1, 1, 1, 1, 1, 1, 1, 
+            1, 1, 1, 1, 1, 1, 1, 1,
             0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 
-            0, 0, 0, 0, 0, 0, 0, 0, 
-            0, 0, 0, 0, 0, 0, 0, 0, 
-            7, 7, 7, 7, 7, 7, 7, 7, 
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            7, 7, 7, 7, 7, 7, 7, 7,
             10, 8, 9, 11, 12, 9, 8, 10
         };
     }
@@ -33,11 +32,23 @@ public class Gamestate {
        state = myState.state;
    }
    
-   public void changeState(byte[] newState)
-   {
-       state = newState;
+   public byte doMove(int[] move) {
+       byte removedPiece = state[move[1]];
+       state[move[1]] = state[move[0]];
+       state[move[0]] = 0;
+       if (state[move[1]] == 1 && move[1] >= 56) {
+           state[move[1]] = (byte) 5;
+       }
+       else if (state[move[1]] == 7 && move[1] <= 7) {
+           state[move[1]] = (byte) 11;
+       }
+       return removedPiece;
    }
-    
+   
+   public void undoMove(int[] move, byte piece) {
+       state[move[0]] = state[move[1]];
+       state[move[1]] = piece;
+   }
           class GameMoves {
     
             public ArrayList<Integer> positions;
@@ -51,17 +62,17 @@ public class Gamestate {
                 {
                   if(pos+8 < 63)
                   {
-                     if(state[pos+8] == 0)     //make sure the next rank is empty
-                     {                    
+                     if(state[pos+8] == 0) //make sure the next rank is empty
+                     {
                         positions.add(pos+8);
                      
-                        if(pos >= 8 && pos <= 15)  //can pawn move two ranks?
+                        if(pos >= 8 && pos <= 15) //can pawn move two ranks?
                         {
-                             if(state[pos+16] == 0) //is two ranks ahead empty?                            
+                             if(state[pos+16] == 0) //is two ranks ahead empty?
                                 { positions.add(pos+16); }
                         }
                      }
-                     else if(state[pos+8] == 7)                                         
+                     else if(state[pos+8] == 7)
                      {
                          if( pos % 8 > 0) //make sure we arent in file a
                          {
@@ -79,8 +90,8 @@ public class Gamestate {
                         }
                       }
                   
-                      if(pos % 8 > 0)        // if not in file A              
-                      {                     
+                      if(pos % 8 > 0) // if not in file A
+                      {
                          if(state[pos+7] >= 7) //if occupied by enemy
                             positions.add(pos+7);
                       }
@@ -94,18 +105,18 @@ public class Gamestate {
                 else
                 {
                   if(pos-8 > 0)
-                  {    
-                    if(state[pos-8] == 0)     //make sure the next rank is empty
-                    {                     
+                  {
+                    if(state[pos-8] == 0) //make sure the next rank is empty
+                    {
                         positions.add(pos-8);
                      
-                        if(pos >= 48 && pos <= 55)  //can pawn move two ranks?
+                        if(pos >= 48 && pos <= 55) //can pawn move two ranks?
                         {
-                            if(state[pos-16] == 0) //is two ranks ahead empty?                            
+                            if(state[pos-16] == 0) //is two ranks ahead empty?
                             { positions.add(pos-16); }
-                        }  
+                        }
                     }
-                    else if(state[pos-8] == 7)                                         
+                    else if(state[pos-8] == 7)
                     {
                          if( pos % 8 > 0) //make sure we arent in file a
                          {
@@ -122,8 +133,8 @@ public class Gamestate {
                              }
                           }
                     }
-                    if(pos % 8 > 0)        // if not in file A              
-                    {                     
+                    if(pos % 8 > 0) // if not in file A
+                    {
                         if(state[pos-7] < 7 && state[pos-7] > 0) //if occupied by enemy
                             positions.add(pos-7);
                     }
@@ -147,15 +158,15 @@ public class Gamestate {
                 positions = new ArrayList<Integer>();
                 
                 if(player == -1) //white player. for now used -1
-                {   
+                {
                     if(pos % 8 > 1) // able to move two files left on board
-                    {                 
+                    {
                         if(pos < 56) //able to move down one rank
                         {
                             if(state[pos+6] >= 7 || state[pos+6] == 0) //enemy at target or empty
                                 positions.add(pos+6);
                         }
-                        if(pos > 8) //able to move  up one rank
+                        if(pos > 8) //able to move up one rank
                         {
                             if(state[pos-10] >=7 || state[pos-10] == 0)
                                 positions.add(pos-10);
@@ -204,13 +215,13 @@ public class Gamestate {
                 else
                 {
                     if(pos % 8 > 1) // able to move two files left on board
-                    {                 
+                    {
                         if(pos < 56) //able to move down one rank
                         {
                             if(state[pos+6] < 7) //enemy at target or empty
                                 positions.add(pos+6);
                         }
-                        if(pos > 8) //able to move  up one rank
+                        if(pos > 8) //able to move up one rank
                         {
                             if(state[pos-10] < 7)
                                 positions.add(pos-10);
@@ -254,8 +265,8 @@ public class Gamestate {
                             if(state[pos-15] < 7)
                                 positions.add(pos-15);
                         }
-                    }                    
-                } 
+                    }
+                }
                 return positions;
             }
             
@@ -281,7 +292,7 @@ public class Gamestate {
                                 break;
                             }
                             else
-                            {   break;  }
+                            { break; }
                         }
                         i = pos;
                         
@@ -298,26 +309,26 @@ public class Gamestate {
                                 break;
                             }
                             else //if ally
-                            {   break;  }
-                        }                        
+                            { break; }
+                        }
                         i = pos;
                       }
                       if(i % 8 != 7)
                       {
                           while(i % 8 < 7 && i-7 > 0) //can go right and up
                           {
-                              if(state[i-7] == 0)   //if empty
+                              if(state[i-7] == 0) //if empty
                               {
                                   positions.add(i-7);
                                   i -=7;
                               }
-                              else if(state[i-7] >= 7)  //if enemy
+                              else if(state[i-7] >= 7) //if enemy
                               {
                                   positions.add(i-7);
                                   break;
                               }
-                              else  // if ally
-                              { break;  }
+                              else // if ally
+                              { break; }
                           }
                           i = pos;
                           while(i % 8 < 7 && i+9 < 63) //can go right and down
@@ -333,11 +344,11 @@ public class Gamestate {
                                   break;
                               }
                               else
-                              { break;  }
+                              { break; }
                           }
-                      }            
+                      }
                    }
-                else    //black player
+                else //black player
                 {
                     if(i%8 != 0)
                     {
@@ -354,7 +365,7 @@ public class Gamestate {
                                 break;
                             }
                             else
-                            {   break;  }
+                            { break; }
                         }
                         i = pos;
                         
@@ -371,26 +382,26 @@ public class Gamestate {
                                 break;
                             }
                             else //if ally
-                            {   break;  }
-                        }                        
+                            { break; }
+                        }
                         i = pos;
                       }
                       if(i % 8 != 7)
                       {
                           while(i % 8 < 7 && i-7 > 0) //can go right and up
                           {
-                              if(state[i-7] == 0)   //if empty
+                              if(state[i-7] == 0) //if empty
                               {
                                   positions.add(i-7);
                                   i -=7;
                               }
-                              else if(state[i-7] < 7)  //if enemy
+                              else if(state[i-7] < 7) //if enemy
                               {
                                   positions.add(i-7);
                                   break;
                               }
-                              else  // if ally
-                              { break;  }
+                              else // if ally
+                              { break; }
                           }
                           i = pos;
                           while(i % 8 < 7 && i+9 < 63) //can go right and down
@@ -406,9 +417,9 @@ public class Gamestate {
                                   break;
                               }
                               else
-                              { break;  }
+                              { break; }
                           }
-                      } 
+                      }
                  }
                 return positions;
              }
@@ -422,9 +433,9 @@ public class Gamestate {
                 {
                     if(i%8 != 0)
                     {
-                        while(i%8>0) //can go left 
+                        while(i%8>0) //can go left
                         {
-                            if(state[i-1] == 0)     //if empty
+                            if(state[i-1] == 0) //if empty
                             {
                                 positions.add(i-1);
                                 i--;
@@ -434,8 +445,8 @@ public class Gamestate {
                                 positions.add(i-1);
                                 break;
                             }
-                            else    // if ally
-                            {   break;  }
+                            else // if ally
+                            { break; }
                         }
                         i = pos;
                     }
@@ -454,26 +465,26 @@ public class Gamestate {
                                 break;
                             }
                             else //if ally
-                            {   break;  }
-                        }                        
+                            { break; }
+                        }
                         i = pos;
                       }
                       if(i > 7)
                       {
                           while(i-8 > 0) //can go up
                           {
-                              if(state[i-8] == 0)   //if empty
+                              if(state[i-8] == 0) //if empty
                               {
                                   positions.add(i-8);
                                   i -=8;
                               }
-                              else if(state[i-8] >= 7)  //if enemy
+                              else if(state[i-8] >= 7) //if enemy
                               {
                                   positions.add(i-8);
                                   break;
                               }
-                              else  // if ally
-                              { break;  }
+                              else // if ally
+                              { break; }
                           }
                           i = pos;
                       }
@@ -492,17 +503,17 @@ public class Gamestate {
                                   break;
                               }
                               else
-                              { break;  }
+                              { break; }
                           }
-                      }            
-                } 
-                else    //black player
+                      }
+                }
+                else //black player
                 {
                    if(i%8 != 0)
                     {
-                        while(i%8>0) //can go left 
+                        while(i%8>0) //can go left
                         {
-                            if(state[i-1] == 0)     //if empty
+                            if(state[i-1] == 0) //if empty
                             {
                                 positions.add(i-1);
                                 i--;
@@ -512,8 +523,8 @@ public class Gamestate {
                                 positions.add(i-1);
                                 break;
                             }
-                            else    // if ally
-                            {   break;  }
+                            else // if ally
+                            { break; }
                         }
                         i = pos;
                     }
@@ -532,26 +543,26 @@ public class Gamestate {
                                 break;
                             }
                             else //if ally
-                            {   break;  }
-                        }                        
+                            { break; }
+                        }
                         i = pos;
                       }
                       if(i > 7)
                       {
                           while(i-8 > 0) //can go up
                           {
-                              if(state[i-8] == 0)   //if empty
+                              if(state[i-8] == 0) //if empty
                               {
                                   positions.add(i-8);
                                   i -=8;
                               }
-                              else if(state[i-8] < 7)  //if enemy
+                              else if(state[i-8] < 7) //if enemy
                               {
                                   positions.add(i-8);
                                   break;
                               }
-                              else  // if ally
-                              { break;  }
+                              else // if ally
+                              { break; }
                           }
                           i = pos;
                       }
@@ -570,9 +581,9 @@ public class Gamestate {
                                   break;
                               }
                               else
-                              { break;  }
+                              { break; }
                           }
-                      } 
+                      }
                 }
                 return positions;
             }
@@ -586,9 +597,9 @@ public class Gamestate {
                 {
                     if(i%8 != 0)
                     {
-                        while(i%8>0) //can go left 
+                        while(i%8>0) //can go left
                         {
-                            if(state[i-1] == 0)     //if empty
+                            if(state[i-1] == 0) //if empty
                             {
                                 positions.add(i-1);
                                 i--;
@@ -598,8 +609,8 @@ public class Gamestate {
                                 positions.add(i-1);
                                 break;
                             }
-                            else    // if ally
-                            {   break;  }
+                            else // if ally
+                            { break; }
                         }
                         i = pos;
                     
@@ -616,7 +627,7 @@ public class Gamestate {
                                 break;
                             }
                             else
-                            {   break;  }
+                            { break; }
                         }
                         i = pos;
                         
@@ -633,8 +644,8 @@ public class Gamestate {
                                 break;
                             }
                             else //if ally
-                            {   break;  }
-                        }                        
+                            { break; }
+                        }
                         i = pos;
                       }
                       if(i % 8 != 7)
@@ -652,24 +663,24 @@ public class Gamestate {
                                 break;
                              }
                              else //if ally
-                             {   break;  }
-                          }                        
+                             { break; }
+                          }
                           i = pos;
                           
                           while(i % 8 < 7 && i-7 > 0) //can go right and up
                           {
-                              if(state[i-7] == 0)   //if empty
+                              if(state[i-7] == 0) //if empty
                               {
                                   positions.add(i-7);
                                   i -=7;
                               }
-                              else if(state[i-7] >= 7)  //if enemy
+                              else if(state[i-7] >= 7) //if enemy
                               {
                                   positions.add(i-7);
                                   break;
                               }
-                              else  // if ally
-                              { break;  }
+                              else // if ally
+                              { break; }
                           }
                           i = pos;
                           while(i % 8 < 7 && i+9 < 63) //can go right and down
@@ -685,25 +696,25 @@ public class Gamestate {
                                   break;
                               }
                               else
-                              { break;  }
+                              { break; }
                           }
                       }
                       if(i > 7)
                       {
                           while(i-8 > 0) //can go up
                           {
-                              if(state[i-8] == 0)   //if empty
+                              if(state[i-8] == 0) //if empty
                               {
                                   positions.add(i-8);
                                   i -=8;
                               }
-                              else if(state[i-8] >= 7)  //if enemy
+                              else if(state[i-8] >= 7) //if enemy
                               {
                                   positions.add(i-8);
                                   break;
                               }
-                              else  // if ally
-                              { break;  }
+                              else // if ally
+                              { break; }
                           }
                           i = pos;
                       }
@@ -722,17 +733,17 @@ public class Gamestate {
                                   break;
                               }
                               else
-                              { break;  }
+                              { break; }
                           }
                       }
                    }
-                else    //black player
+                else //black player
                 {
                     if(i%8 != 0)
                     {
-                        while(i%8>0) //can go left 
+                        while(i%8>0) //can go left
                         {
-                            if(state[i-1] == 0)     //if empty
+                            if(state[i-1] == 0) //if empty
                             {
                                 positions.add(i-1);
                                 i--;
@@ -742,8 +753,8 @@ public class Gamestate {
                                 positions.add(i-1);
                                 break;
                             }
-                            else    // if ally
-                            {   break;  }
+                            else // if ally
+                            { break; }
                         }
                         i = pos;
                     
@@ -760,7 +771,7 @@ public class Gamestate {
                                 break;
                             }
                             else
-                            {   break;  }
+                            { break; }
                         }
                         i = pos;
                         
@@ -777,8 +788,8 @@ public class Gamestate {
                                 break;
                             }
                             else //if ally
-                            {   break;  }
-                        }                        
+                            { break; }
+                        }
                         i = pos;
                       }
                       if(i % 8 != 7)
@@ -796,24 +807,24 @@ public class Gamestate {
                                 break;
                              }
                              else //if ally
-                             {   break;  }
-                          }                        
+                             { break; }
+                          }
                           i = pos;
                           
                           while(i % 8 < 7 && i-7 > 0) //can go right and up
                           {
-                              if(state[i-7] == 0)   //if empty
+                              if(state[i-7] == 0) //if empty
                               {
                                   positions.add(i-7);
                                   i -=7;
                               }
-                              else if(state[i-7] < 7)  //if enemy
+                              else if(state[i-7] < 7) //if enemy
                               {
                                   positions.add(i-7);
                                   break;
                               }
-                              else  // if ally
-                              { break;  }
+                              else // if ally
+                              { break; }
                           }
                           i = pos;
                           while(i % 8 < 7 && i+9 < 63) //can go right and down
@@ -829,25 +840,25 @@ public class Gamestate {
                                   break;
                               }
                               else
-                              { break;  }
+                              { break; }
                           }
                       }
                       if(i > 7)
                       {
                           while(i-8 > 0) //can go up
                           {
-                              if(state[i-8] == 0)   //if empty
+                              if(state[i-8] == 0) //if empty
                               {
                                   positions.add(i-8);
                                   i -=8;
                               }
-                              else if(state[i-8] < 7)  //if enemy
+                              else if(state[i-8] < 7) //if enemy
                               {
                                   positions.add(i-8);
                                   break;
                               }
-                              else  // if ally
-                              { break;  }
+                              else // if ally
+                              { break; }
                           }
                           i = pos;
                       }
@@ -866,7 +877,7 @@ public class Gamestate {
                                   break;
                               }
                               else
-                              { break;  }
+                              { break; }
                           }
                       }
                 }
@@ -875,7 +886,7 @@ public class Gamestate {
             
             public ArrayList<Integer> moveKing(int pos, int player)
             {
-                positions = new ArrayList<Integer>();                
+                positions = new ArrayList<Integer>();
                 
                 if(player == -1) //white player. for now used -1
                 {
@@ -975,15 +986,3 @@ public class Gamestate {
          }
                     
       }
-
-                
-            
-            
-      
-          
-
-
-    
-
-
-  
