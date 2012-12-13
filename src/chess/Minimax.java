@@ -213,7 +213,7 @@ public class Minimax implements Cloneable
             int pos = i;
             switch (i) {
                 case 0:
-                    while (pos < 56) {
+                    while (pos <= 56) {
                         if (myState.state[pos] == 1) {
                             fileAWhitePawns++;
                             // backward pawns calculator
@@ -244,7 +244,7 @@ public class Minimax implements Cloneable
                     }
                     break;
                 case 1:
-                    while (pos < 57) {
+                    while (pos <= 57) {
                         if (myState.state[pos] == 1) {
                             fileBWhitePawns++;
                             if (pos <= 41) {
@@ -277,7 +277,7 @@ public class Minimax implements Cloneable
                     }
                     break;
                 case 2:
-                    while (pos < 58) {
+                    while (pos <= 58) {
                         if (myState.state[pos] == 1) {
                             fileCWhitePawns++;
                             if (pos <= 42) {
@@ -310,7 +310,7 @@ public class Minimax implements Cloneable
                     }
                     break;
                 case 3:
-                    while (pos < 59) {
+                    while (pos <= 59) {
                         if (myState.state[pos] == 1) {
                             fileDWhitePawns++;
                             if (pos <= 43) {
@@ -343,7 +343,7 @@ public class Minimax implements Cloneable
                     }
                     break;
                 case 4:
-                    while (pos < 60) {
+                    while (pos <= 60) {
                         if (myState.state[pos] == 1) {
                             fileEWhitePawns++;
                             if (pos <= 44) {
@@ -376,7 +376,7 @@ public class Minimax implements Cloneable
                     }
                     break;
                 case 5:
-                    while (pos < 61) {
+                    while (pos <= 61) {
                         if (myState.state[pos] == 1) {
                             fileFWhitePawns++;
                             if (pos <= 45) {
@@ -409,7 +409,7 @@ public class Minimax implements Cloneable
                     }
                     break;
                 case 6:
-                    while (pos < 62) {
+                    while (pos <= 62) {
                         if (myState.state[pos] == 1) {
                             fileGWhitePawns++;
                             if (pos <= 46) {
@@ -442,7 +442,7 @@ public class Minimax implements Cloneable
                     }
                     break;
                 case 7:
-                    while (pos < 63) {
+                    while (pos <= 63) {
                         if (myState.state[pos] == 1) {
                             fileHWhitePawns++;
                             if (pos <= 47) {
@@ -570,10 +570,10 @@ public class Minimax implements Cloneable
                 case 10: 
                     blackRooks++;
                     break;
-                case 12: 
+                case 11: 
                     blackQueens++;
                     break;
-                case 13: 
+                case 12: 
                     blackKings++;
                     break;
             }
